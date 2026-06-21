@@ -76,7 +76,7 @@
                 display: block !important;
             }
 
-            header, footer, #quiz-container, #waitlist-block, .no-print, details {
+            header, footer, #quiz-container, #feedback-block, #waitlist-block, .no-print, details {
                 display: none !important;
             }
 
@@ -204,7 +204,7 @@
                 <div id="quiz-intro" class="text-center mb-8">
                     <h1 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight mb-4">Envio Health Assessment</h1>
                     <p class="text-envio-700 text-sm leading-relaxed max-w-lg mx-auto mb-3">
-                        Skin, stress, hormones, and life stages — they're connected. If you've wondered what's driving your skin lately, eight brief questions (about a minute) will give you a personalized profile and a practical next step.
+                        Skin, stress, hormones, and life stages — they're connected. If you've wondered what's driving your skin lately, nine brief questions (about a minute) will give you a personalized profile and a practical next step.
                     </p>
                     <p class="text-envio-600 text-sm leading-relaxed max-w-lg mx-auto">
                         When you finish, you'll receive a complimentary code for an Envio Skincare item.
@@ -214,7 +214,7 @@
 
                 <div class="mb-8">
                     <div class="flex justify-between text-xs text-envio-600 font-semibold uppercase tracking-wider mb-2">
-                        <span id="step-indicator">Question 1 of 8</span>
+                        <span id="step-indicator">Question 1 of 9</span>
                     </div>
                     <div class="w-full bg-ivory-100 h-1.5 rounded-full overflow-hidden">
                         <div id="progress-bar" class="bg-envio-500 h-full transition-all duration-500 ease-out" style="width: 0%;"></div>
@@ -285,9 +285,30 @@
                     <p id="who-can-help-text" class="text-envio-700 leading-7 text-sm mt-4 pt-4 border-t border-envio-100"></p>
                 </details>
 
+                <div id="feedback-block" class="bg-white border border-envio-200 rounded-lg p-6 mb-6 no-print">
+                    <p class="text-sm text-envio-900 font-semibold mb-1 text-center">One optional question</p>
+                    <p class="text-xs text-envio-600 mb-4 text-center max-w-md mx-auto">Your results above are complete. A sentence or two helps us understand what people need.</p>
+                    <label for="open-feedback" class="block text-xs text-envio-800 mb-2 max-w-md mx-auto">
+                        What would coordinated skin + stress support look like for you — or what feels missing today?
+                    </label>
+                    <textarea id="open-feedback" rows="3" placeholder="Share in your own words — optional"
+                        class="w-full max-w-md mx-auto block px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200 resize-none"></textarea>
+                    <div class="flex flex-col sm:flex-row gap-2 mt-3 max-w-md mx-auto">
+                        <button type="button" id="feedback-submit" onclick="submitOpenFeedback()"
+                            class="flex-1 px-5 py-2.5 rounded-lg bg-envio-700 text-white text-sm font-semibold hover:bg-envio-800 transition-colors disabled:opacity-60">
+                            Share response
+                        </button>
+                        <button type="button" id="feedback-skip" onclick="skipOpenFeedback()"
+                            class="flex-1 px-5 py-2.5 rounded-lg border border-envio-200 bg-white text-envio-800 text-sm font-semibold hover:border-envio-400 transition-colors">
+                            Skip
+                        </button>
+                    </div>
+                    <p id="feedback-msg" class="text-xs text-envio-600 mt-3 text-center hidden max-w-md mx-auto" aria-live="polite"></p>
+                </div>
+
                 <div id="waitlist-block" class="bg-white border border-envio-200 rounded-lg p-6 mb-8 no-print">
                     <p class="text-sm text-envio-900 font-semibold mb-1 text-center">Optional follow-up</p>
-                    <p class="text-xs text-envio-600 mb-4 text-center">Your results above are complete. Email and notes are optional.</p>
+                    <p class="text-xs text-envio-600 mb-4 text-center">Leave your email if you'd like occasional updates from Envio Health.</p>
                     <form id="waitlist-form" action="https://formspree.io/f/mgobgdoz" method="POST"
                         class="flex flex-col gap-3 max-w-md mx-auto" onsubmit="submitWaitlist(event)">
                         <input type="hidden" name="submission_type" value="email_opt_in">
@@ -296,11 +317,9 @@
                         <input type="hidden" name="_subject" value="Envio Health Assessment — email opt-in">
                         <input type="email" id="waitlist-email" name="email" placeholder="Email address (optional)"
                             class="w-full px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200">
-                        <textarea id="waitlist-comment" name="comment" rows="3" placeholder="Additional notes (optional)"
-                            class="w-full px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200 resize-none"></textarea>
                         <button type="submit" id="waitlist-submit"
                             class="px-5 py-2.5 rounded-lg bg-envio-700 text-white text-sm font-semibold hover:bg-envio-800 transition-colors disabled:opacity-60">
-                            Submit
+                            Submit email
                         </button>
                     </form>
                     <p id="waitlist-msg" class="text-xs text-envio-600 mt-3 text-center hidden" aria-live="polite"></p>
@@ -426,12 +445,25 @@
                 ]
             },
             {
-                id: "programInterest",
-                title: "Would you like occasional updates from Envio Health?",
+                id: "careBarrier",
+                title: "When you've looked for help with skin, stress, hormones, or emotional wellbeing, what has been hardest?",
                 options: [
-                    { text: "Yes, keep me in the loop", value: "yes" },
-                    { text: "Maybe — I'd like to learn more", value: "maybe" },
-                    { text: "Not right now", value: "no" }
+                    { text: "Knowing where to start", value: "where_to_start" },
+                    { text: "Getting providers to look at the whole picture", value: "whole_picture" },
+                    { text: "Cost or insurance", value: "cost_access" },
+                    { text: "Finding someone I trust", value: "trust" },
+                    { text: "Feeling like my skin concerns are dismissed", value: "dismissed" },
+                    { text: "I haven't looked for help yet", value: "not_looked" }
+                ]
+            },
+            {
+                id: "integratedCareInterest",
+                title: "If a service connected skin care support with stress, emotional, or hormonal support, how interested would you be?",
+                options: [
+                    { text: "Very interested — I would use this", value: "very_interested" },
+                    { text: "Somewhat interested — depends on cost and access", value: "somewhat_interested" },
+                    { text: "Curious, but not ready yet", value: "curious" },
+                    { text: "Not for me", value: "not_for_me" }
                 ]
             }
         ];
@@ -481,8 +513,8 @@
             }
         }
 
-        // Auto-log fires only here: after the user answers Q8 and generateClinicalResults() runs.
-        // No email required — profile + all 8 quiz_responses are sent to Formspree.
+        // Auto-log fires only here: after the user answers the final question and generateClinicalResults() runs.
+        // No email required — profile + quiz_responses are sent to Formspree.
         function logQuizCompletion(profileTitle) {
             if (!FORMSPREE_ENDPOINT) return;
             submitToFormspree({
@@ -901,22 +933,76 @@
             });
         }
 
+        function submitOpenFeedback() {
+            const text = document.getElementById('open-feedback').value.trim();
+            const msg = document.getElementById('feedback-msg');
+            const btn = document.getElementById('feedback-submit');
+
+            if (!text) {
+                msg.textContent = 'Add a brief response, or tap Skip.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                msg.classList.remove('hidden');
+                return;
+            }
+            if (!FORMSPREE_ENDPOINT) {
+                msg.textContent = 'Form not connected yet — add your Formspree URL in index.html, then push to GitHub.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                msg.classList.remove('hidden');
+                return;
+            }
+
+            const profileTitle = document.getElementById('profile-title')?.innerText || '';
+            userResponses.openFeedback = text;
+
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+            msg.classList.add('hidden');
+
+            submitToFormspree({
+                _subject: 'Envio Health Assessment — open feedback',
+                submission_type: 'open_feedback',
+                open_response: text,
+                profile: profileTitle,
+                quiz_responses: JSON.stringify(userResponses)
+            })
+                .then(() => {
+                    msg.textContent = 'Response recorded. Thank you.';
+                    msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                    msg.classList.remove('hidden');
+                    document.getElementById('open-feedback').disabled = true;
+                    btn.classList.add('hidden');
+                    document.getElementById('feedback-skip')?.classList.add('hidden');
+                })
+                .catch(() => {
+                    msg.textContent = 'Something went wrong — try again or skip this step.';
+                    msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                    msg.classList.remove('hidden');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.textContent = 'Share response';
+                });
+        }
+
+        function skipOpenFeedback() {
+            document.getElementById('feedback-block').classList.add('hidden');
+        }
+
         function submitWaitlist(event) {
             event.preventDefault();
 
             const email = document.getElementById('waitlist-email').value.trim();
-            const comment = document.getElementById('waitlist-comment').value.trim();
             const msg = document.getElementById('waitlist-msg');
             const btn = document.getElementById('waitlist-submit');
 
-            if (!email && !comment) {
-                msg.textContent = 'Enter an email, a note, or both — or skip this step.';
+            if (!email) {
+                msg.textContent = 'Enter an email, or skip this step.';
                 msg.className = 'text-xs text-envio-600 mt-3 text-center';
                 msg.classList.remove('hidden');
                 return;
             }
-            if (email && !email.includes('@')) {
-                msg.textContent = 'Please enter a valid email, or leave email blank and submit a comment only.';
+            if (!email.includes('@')) {
+                msg.textContent = 'Please enter a valid email address.';
                 msg.className = 'text-xs text-envio-600 mt-3 text-center';
                 msg.classList.remove('hidden');
                 return;
@@ -939,19 +1025,18 @@
             const payload = {
                 _subject: 'Envio Health Assessment — email opt-in',
                 submission_type: 'email_opt_in',
-                comment: comment || '',
+                email: email,
                 profile: profileTitle,
                 quiz_responses: JSON.stringify(userResponses)
             };
-            if (email) payload.email = email;
+            if (userResponses.openFeedback) payload.open_response = userResponses.openFeedback;
 
             submitToFormspree(payload)
                 .then(() => {
-                    msg.textContent = 'Response received. Thank you.';
+                    msg.textContent = 'Email received. Thank you.';
                     msg.className = 'text-xs text-envio-600 mt-3 text-center';
                     msg.classList.remove('hidden');
                     document.getElementById('waitlist-email').value = '';
-                    document.getElementById('waitlist-comment').value = '';
                 })
                 .catch(() => {
                     msg.textContent = 'Something went wrong — try again or email us through envioskin.com.';
@@ -960,15 +1045,20 @@
                 })
                 .finally(() => {
                     btn.disabled = false;
-                    btn.textContent = 'Submit';
+                    btn.textContent = 'Submit email';
                 });
         }
 
         function resetAssessment() {
             currentStep = 0;
             userResponses = {};
+            document.getElementById('open-feedback').value = '';
+            document.getElementById('open-feedback').disabled = false;
+            document.getElementById('feedback-msg').classList.add('hidden');
+            document.getElementById('feedback-block').classList.remove('hidden');
+            document.getElementById('feedback-submit').classList.remove('hidden');
+            document.getElementById('feedback-skip')?.classList.remove('hidden');
             document.getElementById('waitlist-email').value = '';
-            document.getElementById('waitlist-comment').value = '';
             document.getElementById('waitlist-msg').classList.add('hidden');
             document.getElementById('quiz-recorded-msg').classList.add('hidden');
             document.getElementById('copy-msg').classList.add('hidden');

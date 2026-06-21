@@ -146,8 +146,7 @@
                 display: none !important;
             }
 
-            #results-container .bg-ivory-100,
-            #results-container .bg-watermelon-50 {
+            #results-container .bg-ivory-100 {
                 padding: 0.1in 0.12in !important;
                 margin-bottom: 0.1in !important;
                 border-radius: 3px !important;
@@ -160,7 +159,7 @@
                 margin-bottom: 0.05in !important;
             }
 
-            #results-container .bg-watermelon-50 > p.text-xs {
+            #results-container .bg-ivory-100 > p.text-xs {
                 display: none !important;
             }
 
@@ -189,16 +188,10 @@
 </head>
 <body class="bg-ivory-50 text-envio-900 min-h-screen font-sans flex flex-col justify-between">
 
-    <div class="bg-watermelon-50 border-b border-watermelon-200 py-3 px-6 text-center">
-        <p class="text-sm text-envio-800 font-medium">
-            Receive a free Envio Skincare item when you complete this assessment ✨
-        </p>
-    </div>
-
     <header class="bg-ivory-50 border-b border-envio-100 py-5 px-6 sticky top-0 z-50 shadow-sm">
         <div class="max-w-4xl mx-auto flex justify-between items-center gap-4">
             <img src="assets/envio-logo.png" alt="Envio" class="h-9 md:h-10 w-auto object-contain shrink-0">
-            <span class="text-xs bg-watermelon-50 text-watermelon-700 border border-watermelon-200 px-3 py-1 rounded-full font-medium">
+            <span class="text-xs bg-envio-100 text-envio-700 border border-envio-200 px-3 py-1 rounded-full font-medium tracking-wide">
                 ~60 seconds
             </span>
         </div>
@@ -209,16 +202,14 @@
 
             <div id="quiz-container">
                 <div id="quiz-intro" class="text-center mb-8">
-                    <h1 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight mb-2">You're in the right place 🤍</h1>
-                    <p class="text-envio-600 text-sm leading-relaxed max-w-md mx-auto">
-                        Eight questions, about a minute — skin, hair, stress, and how they connect for you. From the team behind Envio Skincare.
+                    <h1 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight mb-4">Envio Health Assessment</h1>
+                    <p class="text-envio-700 text-sm leading-relaxed max-w-lg mx-auto mb-3">
+                        Skin, stress, hormones, and life stages — they're connected. If you've wondered what's driving your skin lately, eight brief questions (about a minute) will give you a personalized profile and a practical next step.
                     </p>
-                </div>
-
-                <div class="bg-ivory-100 rounded-xl p-4 mb-8 border border-envio-100">
-                    <p class="text-xs text-envio-700 leading-relaxed text-center italic">
-                        In appreciation for completing this assessment, you will receive a code for a free gift from envioskin.com. Thank you for taking this time. 💙
+                    <p class="text-envio-600 text-sm leading-relaxed max-w-lg mx-auto">
+                        When you finish, you'll receive a complimentary code for an Envio Skincare item.
                     </p>
+                    <p class="text-envio-500 text-xs mt-4 tracking-wide">— Jan 🤍</p>
                 </div>
 
                 <div class="mb-8">
@@ -240,13 +231,14 @@
                 </div>
 
                 <div id="results-top" class="text-center mb-8">
-                    <div class="inline-flex p-3 bg-watermelon-50 rounded-full text-watermelon-700 mb-4 font-mono text-xs tracking-wider uppercase font-bold border border-watermelon-200">
+                    <div class="inline-flex p-3 bg-envio-100 rounded-full text-envio-700 mb-4 font-mono text-xs tracking-wider uppercase font-bold border border-envio-200">
                         Your Profile
                     </div>
                     <h2 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight">Your Mind-Skin Connection</h2>
                     <p class="text-envio-600 mt-3 text-sm max-w-md mx-auto leading-relaxed">
                         Based on your answers, here's your personalized profile and a next step you can try this week.
                     </p>
+                    <p id="quiz-recorded-msg" class="text-xs text-envio-500 mt-2 hidden" aria-live="polite"></p>
                 </div>
 
                 <div class="bg-ivory-100 border border-envio-100 rounded-xl p-6 mb-4 shadow-sm">
@@ -255,8 +247,8 @@
                     <p id="plain-insight-text" class="text-envio-900 leading-7 text-base"></p>
                 </div>
 
-                <div class="bg-watermelon-50 border border-watermelon-200 rounded-xl p-6 mb-4 shadow-sm">
-                    <h3 class="text-xs uppercase font-bold tracking-widest text-watermelon-700 mb-2">Your Next Step</h3>
+                <div class="bg-ivory-100 border border-envio-200 rounded-xl p-6 mb-4 shadow-sm">
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-envio-600 mb-2">Your Next Step</h3>
                     <p class="text-xs text-envio-600 mb-3">Try this in the next 7 days:</p>
                     <p id="next-step-text" class="text-envio-900 leading-7 text-base"></p>
                 </div>
@@ -286,57 +278,46 @@
                 </details>
 
                 <details class="bg-ivory-50 border border-envio-100 rounded-xl p-5 mb-8 group">
-                    <summary class="text-xs uppercase font-bold tracking-widest text-watermelon-700 cursor-pointer list-none flex justify-between items-center">
+                    <summary class="text-xs uppercase font-bold tracking-widest text-envio-600 cursor-pointer list-none flex justify-between items-center">
                         Who can help?
-                        <span class="text-watermelon-500 group-open:rotate-180 transition-transform">▼</span>
+                        <span class="text-envio-500 group-open:rotate-180 transition-transform">▼</span>
                     </summary>
                     <p id="who-can-help-text" class="text-envio-700 leading-7 text-sm mt-4 pt-4 border-t border-envio-100"></p>
                 </details>
 
-                <div class="border-t border-envio-100 pt-8 mb-8 no-print">
-                    <p class="text-xs text-envio-600 text-center mb-4">Optional — only if you want it</p>
-                    <div class="bg-ivory-50 rounded-xl p-6 border border-envio-100 text-center max-w-md mx-auto shadow-sm">
-                        <div class="text-2xl mb-2">🩺</div>
-                        <h4 class="font-bold text-envio-800 text-sm mb-2">Connect</h4>
-                        <p class="text-xs text-envio-600 leading-relaxed mb-4">
-                            Envio Skincare is built for skin affected by hormones, stress, and changing life stages. We're extending that same thoughtful care here — support that understands both skin and self.
-                        </p>
-                        <button type="button" onclick="document.getElementById('waitlist-email').focus()"
-                            class="text-xs text-watermelon-600 hover:text-watermelon-700 font-semibold underline decoration-1 underline-offset-4">
-                            Leave your email
-                        </button>
-                    </div>
-                </div>
-                
-                <div id="waitlist-block" class="bg-watermelon-50 border border-watermelon-200 rounded-xl p-6 mb-8 no-print">
-                    <p class="text-sm text-envio-900 font-medium mb-1 text-center">Stay in touch — completely optional</p>
-                    <p class="text-xs text-envio-600 mb-4 text-center">Your results above are already complete. Share your email and/or a comment if you'd like.</p>
-                    <div class="flex flex-col gap-3 max-w-md mx-auto">
-                        <input type="email" id="waitlist-email" placeholder="Email (optional)"
-                            class="w-full px-4 py-2.5 rounded-xl border border-envio-100 text-sm focus:outline-none focus:border-watermelon-500 focus:ring-1 focus:ring-watermelon-200">
-                        <textarea id="waitlist-comment" rows="3" placeholder="Anything else you'd like us to know? (optional)"
-                            class="w-full px-4 py-2.5 rounded-xl border border-envio-100 text-sm focus:outline-none focus:border-watermelon-500 focus:ring-1 focus:ring-watermelon-200 resize-none"></textarea>
-                        <button type="button" onclick="submitWaitlist()"
-                            class="px-5 py-2.5 rounded-xl bg-watermelon-500 text-white text-sm font-semibold hover:bg-watermelon-600 transition-colors">
+                <div id="waitlist-block" class="bg-white border border-envio-200 rounded-lg p-6 mb-8 no-print">
+                    <p class="text-sm text-envio-900 font-semibold mb-1 text-center">Optional follow-up</p>
+                    <p class="text-xs text-envio-600 mb-4 text-center">Your results above are complete. Email and notes are optional.</p>
+                    <form id="waitlist-form" action="https://formspree.io/f/mgobgdoz" method="POST"
+                        class="flex flex-col gap-3 max-w-md mx-auto" onsubmit="submitWaitlist(event)">
+                        <input type="hidden" name="submission_type" value="email_opt_in">
+                        <input type="hidden" id="waitlist-profile" name="profile" value="">
+                        <input type="hidden" id="waitlist-quiz-responses" name="quiz_responses" value="">
+                        <input type="hidden" name="_subject" value="Envio Health Assessment — email opt-in">
+                        <input type="email" id="waitlist-email" name="email" placeholder="Email address (optional)"
+                            class="w-full px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200">
+                        <textarea id="waitlist-comment" name="comment" rows="3" placeholder="Additional notes (optional)"
+                            class="w-full px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200 resize-none"></textarea>
+                        <button type="submit" id="waitlist-submit"
+                            class="px-5 py-2.5 rounded-lg bg-envio-700 text-white text-sm font-semibold hover:bg-envio-800 transition-colors disabled:opacity-60">
                             Submit
                         </button>
-                    </div>
-                    <p id="waitlist-msg" class="text-xs text-envio-600 mt-3 text-center hidden"></p>
+                    </form>
+                    <p id="waitlist-msg" class="text-xs text-envio-600 mt-3 text-center hidden" aria-live="polite"></p>
                 </div>
 
-                <div class="bg-watermelon-50 border border-watermelon-200 rounded-xl p-6 mb-8 text-center no-print">
-                    <h3 class="text-sm font-bold text-envio-800 mb-3">✨ Claim Your Free Skin Gift</h3>
-                    <p class="text-xs text-envio-700 mb-4 leading-relaxed">Thank you kindly from Jan Harris, Envio Health Founder, for completing this assessment.</p>
-                    <p class="text-xs text-watermelon-700 font-semibold mb-4">Use code <span class="text-watermelon-600">SKIN GIFT</span> at checkout</p>
+                <div class="bg-white border border-envio-200 rounded-lg p-6 mb-8 text-center no-print">
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-envio-600 mb-2">Complimentary offer</h3>
+                    <p class="text-sm text-envio-800 mb-4">Use code <span class="font-semibold">SKIN GIFT</span> at checkout on envioskin.com</p>
                     <a href="https://www.envioskin.com/collections/all" 
                         target="_blank" rel="noopener noreferrer"
-                        class="inline-block px-6 py-3 rounded-lg bg-watermelon-500 text-white text-sm font-semibold hover:bg-watermelon-600 transition-colors">
-                        Browse all products →
+                        class="inline-block px-6 py-2.5 rounded-lg border border-envio-300 bg-white text-envio-800 text-sm font-semibold hover:border-envio-500 transition-colors">
+                        Browse Envio Skincare
                     </a>
                 </div>
 
                 <div class="mt-10 text-center no-print">
-                    <button onclick="resetAssessment()" class="text-xs text-envio-600 hover:text-watermelon-600 font-semibold transition-colors underline decoration-1 underline-offset-4">
+                    <button onclick="resetAssessment()" class="text-xs text-envio-600 hover:text-envio-800 font-semibold transition-colors underline decoration-1 underline-offset-4">
                         Retake Assessment
                     </button>
                 </div>
@@ -352,7 +333,7 @@
 
     <footer class="bg-ivory-50 border-t border-envio-100 py-6 px-6 text-center text-xs text-envio-600">
         <div class="max-w-4xl mx-auto space-y-2">
-            <p>&copy; 2026 Envio Health · from the makers of <a href="https://www.envioskin.com" target="_blank" rel="noopener noreferrer" class="text-watermelon-600 hover:text-watermelon-700 underline decoration-1">Envio Skincare</a> · <a href="https://www.envioskin.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer" class="hover:text-envio-800 underline decoration-1">Privacy</a></p>
+            <p>&copy; 2026 Envio Health · from the makers of <a href="https://www.envioskin.com" target="_blank" rel="noopener noreferrer" class="text-envio-600 hover:text-envio-800 underline decoration-1">Envio Skincare</a> · <a href="https://www.envioskin.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer" class="hover:text-envio-800 underline decoration-1">Privacy</a></p>
             <p class="opacity-75">For education only — not medical advice. Keep following any treatment plan from your healthcare provider.</p>
             <p class="opacity-75">Under 13? Please complete with a parent or guardian.</p>
         </div>
@@ -377,7 +358,7 @@
             },
             {
                 id: "duration",
-                title: "How long have you been carrying this concern?",
+                title: "How long have you had this concern?",
                 options: [
                     { text: "Less than 6 months", value: "short" },
                     { text: "6 months to 1 year", value: "medium" },
@@ -420,7 +401,7 @@
             },
             {
                 id: "goal",
-                title: "What would feel like a win for you right now?",
+                title: "What is your primary goal right now?",
                 options: [
                     { text: "Clearer skin", value: "clearer" },
                     { text: "Understanding my triggers", value: "triggers" },
@@ -463,20 +444,55 @@
         // 2. Paste it below (example: 'https://formspree.io/f/xyzabc')
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mgobgdoz';
 
+        // Formspree AJAX: Accept + Content-Type application/json; response.ok = success.
+        // Do not send a fake email — Formspree rejects invalid email values.
+        async function submitToFormspree(payload) {
+            const response = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            let data = {};
+            try {
+                data = await response.json();
+            } catch (_) {}
+            if (!response.ok) {
+                const detail = data.error
+                    || (Array.isArray(data.errors) && data.errors.map(e => e.message).filter(Boolean).join(', '))
+                    || 'Submit failed';
+                throw new Error(detail);
+            }
+            return data;
+        }
+
+        function showQuizRecordedStatus(success) {
+            const el = document.getElementById('quiz-recorded-msg');
+            if (!el) return;
+            el.classList.remove('hidden');
+            if (success) {
+                el.textContent = 'Responses recorded.';
+                el.className = 'text-xs text-envio-500 mt-2';
+            } else {
+                el.textContent = 'Could not save responses — your results above are still complete.';
+                el.className = 'text-xs text-envio-600 mt-2';
+            }
+        }
+
+        // Auto-log fires only here: after the user answers Q8 and generateClinicalResults() runs.
+        // No email required — profile + all 8 quiz_responses are sent to Formspree.
         function logQuizCompletion(profileTitle) {
             if (!FORMSPREE_ENDPOINT) return;
-            fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    _subject: 'Envio Health Assessment — quiz completed',
-                    submission_type: 'quiz_completion',
-                    email: 'not provided',
-                    comment: '',
-                    profile: profileTitle,
-                    quiz_responses: JSON.stringify(userResponses)
-                })
-            }).catch(() => {});
+            submitToFormspree({
+                _subject: 'Envio Health Assessment — quiz completed',
+                submission_type: 'quiz_completion',
+                profile: profileTitle,
+                quiz_responses: JSON.stringify(userResponses)
+            })
+                .then(() => showQuizRecordedStatus(true))
+                .catch(() => showQuizRecordedStatus(false));
         }
 
         // Plain language for emotional support — avoids "mental health professional"
@@ -802,7 +818,7 @@
                 optionsHTML += `
                     <button type="button"
                         onclick="handleSelection('${questionData.id}', '${option.value}')"
-                        class="w-full text-left px-5 py-4 rounded-xl border border-envio-100 bg-ivory-50 hover:border-watermelon-400 hover:bg-watermelon-50 transition-all duration-200 text-envio-900 font-medium">
+                        class="w-full text-left px-5 py-3.5 rounded-lg border border-envio-200 bg-white hover:border-envio-500 hover:bg-envio-50 transition-colors duration-150 text-envio-900 text-sm">
                         ${option.text}
                     </button>`;
             });
@@ -885,61 +901,67 @@
             });
         }
 
-        function submitWaitlist() {
+        function submitWaitlist(event) {
+            event.preventDefault();
+
             const email = document.getElementById('waitlist-email').value.trim();
             const comment = document.getElementById('waitlist-comment').value.trim();
             const msg = document.getElementById('waitlist-msg');
-            const btn = document.querySelector('#waitlist-block button');
+            const btn = document.getElementById('waitlist-submit');
 
             if (!email && !comment) {
-                msg.textContent = 'Add an email, a comment, or both — or skip and explore your results above.';
+                msg.textContent = 'Enter an email, a note, or both — or skip this step.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center';
                 msg.classList.remove('hidden');
                 return;
             }
             if (email && !email.includes('@')) {
                 msg.textContent = 'Please enter a valid email, or leave email blank and submit a comment only.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center';
                 msg.classList.remove('hidden');
                 return;
             }
             if (!FORMSPREE_ENDPOINT) {
                 msg.textContent = 'Form not connected yet — add your Formspree URL in index.html, then push to GitHub.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center';
                 msg.classList.remove('hidden');
                 return;
             }
+
+            const profileTitle = document.getElementById('profile-title')?.innerText || '';
+            document.getElementById('waitlist-profile').value = profileTitle;
+            document.getElementById('waitlist-quiz-responses').value = JSON.stringify(userResponses);
 
             btn.disabled = true;
             btn.textContent = 'Sending…';
             msg.classList.add('hidden');
 
-            const profileTitle = document.getElementById('profile-title')?.innerText || '';
+            const payload = {
+                _subject: 'Envio Health Assessment — email opt-in',
+                submission_type: 'email_opt_in',
+                comment: comment || '',
+                profile: profileTitle,
+                quiz_responses: JSON.stringify(userResponses)
+            };
+            if (email) payload.email = email;
 
-            fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    _subject: 'Envio Health Assessment — email opt-in',
-                    submission_type: 'email_opt_in',
-                    email: email || 'not provided',
-                    comment: comment || '',
-                    profile: profileTitle,
-                    quiz_responses: JSON.stringify(userResponses)
+            submitToFormspree(payload)
+                .then(() => {
+                    msg.textContent = 'Response received. Thank you.';
+                    msg.className = 'text-xs text-envio-600 mt-3 text-center';
+                    msg.classList.remove('hidden');
+                    document.getElementById('waitlist-email').value = '';
+                    document.getElementById('waitlist-comment').value = '';
                 })
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Submit failed');
-                msg.textContent = "Thank you for sharing — we'll be in touch. 🤍";
-                msg.classList.remove('hidden');
-                document.getElementById('waitlist-email').value = '';
-                document.getElementById('waitlist-comment').value = '';
-            })
-            .catch(() => {
-                msg.textContent = 'Something went wrong — try again or email us through envioskin.com.';
-                msg.classList.remove('hidden');
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.textContent = 'Submit';
-            });
+                .catch(() => {
+                    msg.textContent = 'Something went wrong — try again or email us through envioskin.com.';
+                    msg.className = 'text-xs text-envio-600 mt-3 text-center';
+                    msg.classList.remove('hidden');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.textContent = 'Submit';
+                });
         }
 
         function resetAssessment() {
@@ -948,6 +970,7 @@
             document.getElementById('waitlist-email').value = '';
             document.getElementById('waitlist-comment').value = '';
             document.getElementById('waitlist-msg').classList.add('hidden');
+            document.getElementById('quiz-recorded-msg').classList.add('hidden');
             document.getElementById('copy-msg').classList.add('hidden');
             lastResultsSummary = '';
             document.getElementById('results-container').classList.add('hidden');

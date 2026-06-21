@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envio Health Assessment</title>
+    <title>The Envio Skin Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -192,7 +192,7 @@
         <div class="max-w-4xl mx-auto flex justify-between items-center gap-4">
             <img src="assets/envio-logo.png" alt="Envio" class="h-9 md:h-10 w-auto object-contain shrink-0">
             <span class="text-xs bg-envio-100 text-envio-700 border border-envio-200 px-3 py-1 rounded-full font-medium tracking-wide">
-                ~60 seconds
+                ~2 minutes
             </span>
         </div>
     </header>
@@ -202,9 +202,9 @@
 
             <div id="quiz-container">
                 <div id="quiz-intro" class="text-center mb-8">
-                    <h1 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight mb-4">Envio Health Assessment</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight mb-4">The Envio Skin Profile</h1>
                     <p class="text-envio-700 text-sm leading-relaxed max-w-lg mx-auto mb-3">
-                        Skin, stress, hormones, and life stages — they're connected. If you've wondered what's driving your skin lately, nine brief questions (about a minute) will give you a personalized profile and a practical next step.
+                        Skin, stress, hormones, and life stages — they're connected. If you've wondered what's driving your skin lately, ten brief questions (about two minutes) will give you a personalized profile and a practical next step.
                     </p>
                     <p class="text-envio-600 text-sm leading-relaxed max-w-lg mx-auto">
                         When you finish, you'll receive a complimentary code for an Envio Skincare item.
@@ -214,7 +214,7 @@
 
                 <div class="mb-8">
                     <div class="flex justify-between text-xs text-envio-600 font-semibold uppercase tracking-wider mb-2">
-                        <span id="step-indicator">Question 1 of 9</span>
+                        <span id="step-indicator">Question 1 of 10</span>
                     </div>
                     <div class="w-full bg-ivory-100 h-1.5 rounded-full overflow-hidden">
                         <div id="progress-bar" class="bg-envio-500 h-full transition-all duration-500 ease-out" style="width: 0%;"></div>
@@ -227,7 +227,7 @@
             <div id="results-container" class="hidden fade-in">
                 <div id="print-header">
                     <img src="assets/envio-logo.png" alt="Envio">
-                    <p>Health Assessment Results</p>
+                    <p>Envio Skin Profile Results</p>
                 </div>
 
                 <div id="results-top" class="text-center mb-8">
@@ -314,7 +314,7 @@
                         <input type="hidden" name="submission_type" value="email_opt_in">
                         <input type="hidden" id="waitlist-profile" name="profile" value="">
                         <input type="hidden" id="waitlist-quiz-responses" name="quiz_responses" value="">
-                        <input type="hidden" name="_subject" value="Envio Health Assessment — email opt-in">
+                        <input type="hidden" name="_subject" value="The Envio Skin Profile — email opt-in">
                         <input type="email" id="waitlist-email" name="email" placeholder="Email address (optional)"
                             class="w-full px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200">
                         <button type="submit" id="waitlist-submit"
@@ -445,6 +445,21 @@
                 ]
             },
             {
+                id: "supportTypes",
+                title: "Which types of support have you looked for related to your skin, hormones, stress, or emotional wellbeing?",
+                subtitle: "Select all that apply.",
+                type: "multi",
+                options: [
+                    { text: "Dermatologist", value: "dermatologist" },
+                    { text: "Primary care doctor", value: "primary_care" },
+                    { text: "OB/GYN or hormone support", value: "obgyn_hormone" },
+                    { text: "Counselor or psychologist", value: "counselor_psychologist" },
+                    { text: "Esthetician / skin specialist", value: "esthetician_skin_specialist" },
+                    { text: "Online research or skincare communities", value: "online_research_communities" },
+                    { text: "I haven't looked for support yet", value: "not_looked", exclusive: true }
+                ]
+            },
+            {
                 id: "careBarrier",
                 title: "When you've looked for help with skin, stress, hormones, or emotional wellbeing, what has been hardest?",
                 options: [
@@ -518,7 +533,7 @@
         function logQuizCompletion(profileTitle) {
             if (!FORMSPREE_ENDPOINT) return;
             submitToFormspree({
-                _subject: 'Envio Health Assessment — quiz completed',
+                _subject: 'The Envio Skin Profile — quiz completed',
                 submission_type: 'quiz_completion',
                 profile: profileTitle,
                 quiz_responses: JSON.stringify(userResponses)
@@ -580,7 +595,7 @@
         }
 
         function buildResultsSummary(title, plain, nextStep) {
-            return `Envio Health Assessment\n\nProfile: ${title}\n\n${plain}\n\nYour next step (this week):\n${nextStep}\n\nFor education only — not medical advice.`;
+            return `The Envio Skin Profile\n\nProfile: ${title}\n\n${plain}\n\nYour next step (this week):\n${nextStep}\n\nFor education only — not medical advice.`;
         }
 
         function printResults() {
@@ -846,14 +861,34 @@
             document.getElementById('progress-bar').style.width = `${percentage}%`;
 
             let optionsHTML = '';
-            questionData.options.forEach(option => {
+            if (questionData.type === 'multi') {
+                questionData.options.forEach(option => {
+                    optionsHTML += `
+                        <label class="w-full flex items-center gap-3 px-5 py-3.5 rounded-lg border border-envio-200 bg-white hover:border-envio-500 hover:bg-envio-50 transition-colors duration-150 text-envio-900 text-sm cursor-pointer">
+                            <input type="checkbox"
+                                value="${option.value}"
+                                data-exclusive="${option.exclusive ? 'true' : 'false'}"
+                                onchange="toggleMultiSelection('${questionData.id}', this)"
+                                class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                            <span>${option.text}</span>
+                        </label>`;
+                });
                 optionsHTML += `
-                    <button type="button"
-                        onclick="handleSelection('${questionData.id}', '${option.value}')"
-                        class="w-full text-left px-5 py-3.5 rounded-lg border border-envio-200 bg-white hover:border-envio-500 hover:bg-envio-50 transition-colors duration-150 text-envio-900 text-sm">
-                        ${option.text}
+                    <p id="multi-select-msg" class="text-xs text-envio-600 hidden">Select at least one option to continue.</p>
+                    <button type="button" onclick="continueMultiSelection('${questionData.id}')"
+                        class="mt-2 px-5 py-2.5 rounded-lg bg-envio-700 text-white text-sm font-semibold hover:bg-envio-800 transition-colors">
+                        Continue
                     </button>`;
-            });
+            } else {
+                questionData.options.forEach(option => {
+                    optionsHTML += `
+                        <button type="button"
+                            onclick="handleSelection('${questionData.id}', '${option.value}')"
+                            class="w-full text-left px-5 py-3.5 rounded-lg border border-envio-200 bg-white hover:border-envio-500 hover:bg-envio-50 transition-colors duration-150 text-envio-900 text-sm">
+                            ${option.text}
+                        </button>`;
+                });
+            }
 
             container.innerHTML = `
                 <h3 class="text-xl font-bold text-envio-800 tracking-tight mb-2">${questionData.title}</h3>
@@ -865,6 +900,39 @@
         function handleSelection(questionId, selectedValue) {
             userResponses[questionId] = selectedValue;
 
+            goToNextStep();
+        }
+
+        function toggleMultiSelection(questionId, checkbox) {
+            const checkedBoxes = Array.from(document.querySelectorAll(`#question-card input[type="checkbox"]`));
+
+            if (checkbox.dataset.exclusive === 'true' && checkbox.checked) {
+                checkedBoxes.forEach(box => {
+                    if (box !== checkbox) box.checked = false;
+                });
+            } else if (checkbox.checked) {
+                checkedBoxes.forEach(box => {
+                    if (box.dataset.exclusive === 'true') box.checked = false;
+                });
+            }
+
+            userResponses[questionId] = checkedBoxes
+                .filter(box => box.checked)
+                .map(box => box.value);
+
+            document.getElementById('multi-select-msg')?.classList.add('hidden');
+        }
+
+        function continueMultiSelection(questionId) {
+            const values = Array.isArray(userResponses[questionId]) ? userResponses[questionId] : [];
+            if (values.length === 0) {
+                document.getElementById('multi-select-msg')?.classList.remove('hidden');
+                return;
+            }
+            goToNextStep();
+        }
+
+        function goToNextStep() {
             if (currentStep < assessmentQuestions.length - 1) {
                 currentStep++;
                 displayQuestion();
@@ -959,7 +1027,7 @@
             msg.classList.add('hidden');
 
             submitToFormspree({
-                _subject: 'Envio Health Assessment — open feedback',
+                _subject: 'The Envio Skin Profile — open feedback',
                 submission_type: 'open_feedback',
                 open_response: text,
                 profile: profileTitle,
@@ -1023,7 +1091,7 @@
             msg.classList.add('hidden');
 
             const payload = {
-                _subject: 'Envio Health Assessment — email opt-in',
+                _subject: 'The Envio Skin Profile — email opt-in',
                 submission_type: 'email_opt_in',
                 email: email,
                 profile: profileTitle,

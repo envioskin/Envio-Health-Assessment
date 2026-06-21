@@ -33,13 +33,14 @@
                             100: '#FBF8F2',
                             200: '#F5F0E8'
                         },
-                        blush: {
-                            50: '#FDF6F6',
-                            100: '#F9E8E8',
-                            200: '#EFCFCF',
-                            400: '#D9A0A3',
-                            500: '#C8888C',
-                            600: '#A86B6F'
+                        watermelon: {
+                            50: '#FFF5F7',
+                            100: '#FFEBEF',
+                            200: '#FFD7E0',
+                            400: '#FF9DB3',
+                            500: '#FF7FA0',
+                            600: '#FF6B8A',
+                            700: '#E85A7A'
                         }
                     }
                 }
@@ -146,7 +147,7 @@
             }
 
             #results-container .bg-ivory-100,
-            #results-container .bg-blush-50 {
+            #results-container .bg-watermelon-50 {
                 padding: 0.1in 0.12in !important;
                 margin-bottom: 0.1in !important;
                 border-radius: 3px !important;
@@ -159,7 +160,7 @@
                 margin-bottom: 0.05in !important;
             }
 
-            #results-container .bg-blush-50 > p.text-xs {
+            #results-container .bg-watermelon-50 > p.text-xs {
                 display: none !important;
             }
 
@@ -188,7 +189,7 @@
 </head>
 <body class="bg-ivory-50 text-envio-900 min-h-screen font-sans flex flex-col justify-between">
 
-    <div class="bg-blush-50 border-b border-blush-200 py-3 px-6 text-center">
+    <div class="bg-watermelon-50 border-b border-watermelon-200 py-3 px-6 text-center">
         <p class="text-sm text-envio-800 font-medium">
             Receive a free Envio Skincare item when you complete this assessment ✨
         </p>
@@ -197,7 +198,7 @@
     <header class="bg-ivory-50 border-b border-envio-100 py-5 px-6 sticky top-0 z-50 shadow-sm">
         <div class="max-w-4xl mx-auto flex justify-between items-center gap-4">
             <img src="assets/envio-logo.png" alt="Envio" class="h-9 md:h-10 w-auto object-contain shrink-0">
-            <span class="text-xs bg-blush-50 text-envio-600 border border-blush-100 px-3 py-1 rounded-full font-medium">
+            <span class="text-xs bg-watermelon-50 text-watermelon-700 border border-watermelon-200 px-3 py-1 rounded-full font-medium">
                 ~60 seconds
             </span>
         </div>
@@ -239,7 +240,7 @@
                 </div>
 
                 <div id="results-top" class="text-center mb-8">
-                    <div class="inline-flex p-3 bg-blush-50 rounded-full text-blush-600 mb-4 font-mono text-xs tracking-wider uppercase font-bold border border-blush-100">
+                    <div class="inline-flex p-3 bg-watermelon-50 rounded-full text-watermelon-700 mb-4 font-mono text-xs tracking-wider uppercase font-bold border border-watermelon-200">
                         Your Profile
                     </div>
                     <h2 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight">Your Mind-Skin Connection</h2>
@@ -254,8 +255,8 @@
                     <p id="plain-insight-text" class="text-envio-900 leading-7 text-base"></p>
                 </div>
 
-                <div class="bg-blush-50 border border-blush-100 rounded-xl p-6 mb-4 shadow-sm">
-                    <h3 class="text-xs uppercase font-bold tracking-widest text-blush-600 mb-2">Your Next Step</h3>
+                <div class="bg-watermelon-50 border border-watermelon-200 rounded-xl p-6 mb-4 shadow-sm">
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-watermelon-700 mb-2">Your Next Step</h3>
                     <p class="text-xs text-envio-600 mb-3">Try this in the next 7 days:</p>
                     <p id="next-step-text" class="text-envio-900 leading-7 text-base"></p>
                 </div>
@@ -285,9 +286,9 @@
                 </details>
 
                 <details class="bg-ivory-50 border border-envio-100 rounded-xl p-5 mb-8 group">
-                    <summary class="text-xs uppercase font-bold tracking-widest text-blush-600 cursor-pointer list-none flex justify-between items-center">
+                    <summary class="text-xs uppercase font-bold tracking-widest text-watermelon-700 cursor-pointer list-none flex justify-between items-center">
                         Who can help?
-                        <span class="text-blush-500 group-open:rotate-180 transition-transform">▼</span>
+                        <span class="text-watermelon-500 group-open:rotate-180 transition-transform">▼</span>
                     </summary>
                     <p id="who-can-help-text" class="text-envio-700 leading-7 text-sm mt-4 pt-4 border-t border-envio-100"></p>
                 </details>
@@ -301,41 +302,41 @@
                             Envio Skincare is built for skin affected by hormones, stress, and changing life stages. We're extending that same thoughtful care here — support that understands both skin and self.
                         </p>
                         <button type="button" onclick="document.getElementById('waitlist-email').focus()"
-                            class="text-xs text-blush-600 hover:text-blush-700 font-semibold underline decoration-1 underline-offset-4">
+                            class="text-xs text-watermelon-600 hover:text-watermelon-700 font-semibold underline decoration-1 underline-offset-4">
                             Leave your email
                         </button>
                     </div>
                 </div>
                 
-                <div id="waitlist-block" class="bg-blush-50 border border-blush-100 rounded-xl p-6 mb-8 no-print">
+                <div id="waitlist-block" class="bg-watermelon-50 border border-watermelon-200 rounded-xl p-6 mb-8 no-print">
                     <p class="text-sm text-envio-900 font-medium mb-1 text-center">Stay in touch — completely optional</p>
                     <p class="text-xs text-envio-600 mb-4 text-center">Your results above are already complete. Share your email and/or a comment if you'd like.</p>
                     <div class="flex flex-col gap-3 max-w-md mx-auto">
                         <input type="email" id="waitlist-email" placeholder="Email (optional)"
-                            class="w-full px-4 py-2.5 rounded-xl border border-envio-100 text-sm focus:outline-none focus:border-envio-500 focus:ring-1 focus:ring-envio-200">
+                            class="w-full px-4 py-2.5 rounded-xl border border-envio-100 text-sm focus:outline-none focus:border-watermelon-500 focus:ring-1 focus:ring-watermelon-200">
                         <textarea id="waitlist-comment" rows="3" placeholder="Anything else you'd like us to know? (optional)"
-                            class="w-full px-4 py-2.5 rounded-xl border border-envio-100 text-sm focus:outline-none focus:border-envio-500 focus:ring-1 focus:ring-envio-200 resize-none"></textarea>
+                            class="w-full px-4 py-2.5 rounded-xl border border-envio-100 text-sm focus:outline-none focus:border-watermelon-500 focus:ring-1 focus:ring-watermelon-200 resize-none"></textarea>
                         <button type="button" onclick="submitWaitlist()"
-                            class="px-5 py-2.5 rounded-xl bg-blush-500 text-white text-sm font-semibold hover:bg-blush-600 transition-colors">
+                            class="px-5 py-2.5 rounded-xl bg-watermelon-500 text-white text-sm font-semibold hover:bg-watermelon-600 transition-colors">
                             Submit
                         </button>
                     </div>
                     <p id="waitlist-msg" class="text-xs text-envio-600 mt-3 text-center hidden"></p>
                 </div>
 
-                <div class="bg-blush-50 border border-blush-200 rounded-xl p-6 mb-8 text-center no-print">
+                <div class="bg-watermelon-50 border border-watermelon-200 rounded-xl p-6 mb-8 text-center no-print">
                     <h3 class="text-sm font-bold text-envio-800 mb-3">✨ Claim Your Free Skin Gift</h3>
-                    <p class="text-xs text-envio-700 mb-3 leading-relaxed">Thank you kindly from Jan Harris, Envio Health Founder, for completing this assessment.</p>
-                    <p class="text-xs text-envio-600 mb-4">Use code <span class="font-bold text-blush-600">SKIN GIFT</span> at checkout</p>
-                    <a href="https://envioskin.com/discount/Skin%2520Gift?utm_campaign=9a0584&utm_source=discount_shareable_link" 
+                    <p class="text-xs text-envio-700 mb-4 leading-relaxed">Thank you kindly from Jan Harris, Envio Health Founder, for completing this assessment.</p>
+                    <p class="text-xs text-watermelon-700 font-semibold mb-4">Use code <span class="text-watermelon-600">SKIN GIFT</span> at checkout</p>
+                    <a href="https://www.envioskin.com/collections/all" 
                         target="_blank" rel="noopener noreferrer"
-                        class="inline-block px-4 py-2 rounded-lg bg-blush-500 text-white text-xs font-semibold hover:bg-blush-600 transition-colors">
-                        Get your free item →
+                        class="inline-block px-6 py-3 rounded-lg bg-watermelon-500 text-white text-sm font-semibold hover:bg-watermelon-600 transition-colors">
+                        Browse all products →
                     </a>
                 </div>
 
                 <div class="mt-10 text-center no-print">
-                    <button onclick="resetAssessment()" class="text-xs text-envio-600 hover:text-blush-600 font-semibold transition-colors underline decoration-1 underline-offset-4">
+                    <button onclick="resetAssessment()" class="text-xs text-envio-600 hover:text-watermelon-600 font-semibold transition-colors underline decoration-1 underline-offset-4">
                         Retake Assessment
                     </button>
                 </div>
@@ -351,7 +352,7 @@
 
     <footer class="bg-ivory-50 border-t border-envio-100 py-6 px-6 text-center text-xs text-envio-600">
         <div class="max-w-4xl mx-auto space-y-2">
-            <p>&copy; 2026 Envio Health · from the makers of <a href="https://www.envioskin.com" target="_blank" rel="noopener noreferrer" class="text-blush-600 hover:text-blush-700 underline decoration-1">Envio Skincare</a></p>
+            <p>&copy; 2026 Envio Health · from the makers of <a href="https://www.envioskin.com" target="_blank" rel="noopener noreferrer" class="text-watermelon-600 hover:text-watermelon-700 underline decoration-1">Envio Skincare</a></p>
             <p class="opacity-75">For education only — not medical advice. Keep following any treatment plan from your healthcare provider.</p>
             <p class="opacity-75">Under 13? Please complete with a parent or guardian.</p>
         </div>
@@ -785,7 +786,7 @@
                 optionsHTML += `
                     <button type="button"
                         onclick="handleSelection('${questionData.id}', '${option.value}')"
-                        class="w-full text-left px-5 py-4 rounded-xl border border-envio-100 bg-ivory-50 hover:border-blush-400 hover:bg-blush-50 transition-all duration-200 text-envio-900 font-medium">
+                        class="w-full text-left px-5 py-4 rounded-xl border border-envio-100 bg-ivory-50 hover:border-watermelon-400 hover:bg-watermelon-50 transition-all duration-200 text-envio-900 font-medium">
                         ${option.text}
                     </button>`;
             });

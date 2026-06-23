@@ -76,7 +76,7 @@
                 display: block !important;
             }
 
-            header, footer, #quiz-container, #waitlist-block, .no-print, details {
+            header, footer, #quiz-container, #post-results-feedback, #waitlist-block, .no-print, details {
                 display: none !important;
             }
 
@@ -288,6 +288,58 @@
                     <p id="who-can-help-text" class="text-envio-700 leading-7 text-sm mt-4 pt-4 border-t border-envio-100"></p>
                 </details>
 
+                <div id="post-results-feedback" class="bg-white border border-envio-200 rounded-lg p-6 mb-6 no-print">
+                    <p class="text-sm text-envio-900 font-semibold mb-1 text-center">Optional — one more thing</p>
+                    <p class="text-xs text-envio-600 mb-4 text-center max-w-md mx-auto">Your results above are complete. This helps us understand what kind of support would help you.</p>
+
+                    <div id="feature-priorities-section" class="hidden max-w-md mx-auto mb-4">
+                        <p class="text-xs text-envio-800 font-medium mb-1">What would matter most to you?</p>
+                        <p class="text-xs text-envio-600 mb-3">Select all that apply.</p>
+                        <div id="feature-priorities-list" class="flex flex-col gap-2">
+                            <label class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-envio-200 bg-white text-envio-900 text-sm cursor-pointer">
+                                <input type="checkbox" value="clear_guidance" onchange="toggleFeaturePriority(this)" class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                                <span>Clear guidance for my concern</span>
+                            </label>
+                            <label class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-envio-200 bg-white text-envio-900 text-sm cursor-pointer">
+                                <input type="checkbox" value="personalized_recommendations" onchange="toggleFeaturePriority(this)" class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                                <span>Personalized recommendations</span>
+                            </label>
+                            <label class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-envio-200 bg-white text-envio-900 text-sm cursor-pointer">
+                                <input type="checkbox" value="progress_tracking" onchange="toggleFeaturePriority(this)" class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                                <span>Easy progress tracking</span>
+                            </label>
+                            <label class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-envio-200 bg-white text-envio-900 text-sm cursor-pointer">
+                                <input type="checkbox" value="habit_support" onchange="toggleFeaturePriority(this)" class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                                <span>Help with habits like skin picking or hair pulling</span>
+                            </label>
+                            <label class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-envio-200 bg-white text-envio-900 text-sm cursor-pointer">
+                                <input type="checkbox" value="connect_skin_hormones_emotions" onchange="toggleFeaturePriority(this)" class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                                <span>Connecting skin, hormones, and emotions</span>
+                            </label>
+                            <label class="w-full flex items-center gap-3 px-4 py-3 rounded-lg border border-envio-200 bg-white text-envio-900 text-sm cursor-pointer">
+                                <input type="checkbox" value="simple_easy" onchange="toggleFeaturePriority(this)" class="h-4 w-4 rounded border-envio-300 text-envio-700 focus:ring-envio-500">
+                                <span>Simple and easy to use</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <label for="open-feedback" class="block text-xs text-envio-800 mb-2 max-w-md mx-auto">Anything else you wish existed?</label>
+                    <textarea id="open-feedback" rows="2" placeholder="Optional — share in your own words"
+                        class="w-full max-w-md mx-auto block px-4 py-2.5 rounded-lg border border-envio-200 bg-white text-sm text-envio-900 focus:outline-none focus:border-envio-600 focus:ring-1 focus:ring-envio-200 resize-none"></textarea>
+
+                    <div class="flex flex-col sm:flex-row gap-2 mt-3 max-w-md mx-auto">
+                        <button type="button" id="feedback-submit" onclick="submitPostResultsFeedback()"
+                            class="flex-1 px-5 py-2.5 rounded-lg bg-envio-700 text-white text-sm font-semibold hover:bg-envio-800 transition-colors disabled:opacity-60">
+                            Share response
+                        </button>
+                        <button type="button" id="feedback-skip" onclick="skipPostResultsFeedback()"
+                            class="flex-1 px-5 py-2.5 rounded-lg border border-envio-200 bg-white text-envio-800 text-sm font-semibold hover:border-envio-400 transition-colors">
+                            Skip
+                        </button>
+                    </div>
+                    <p id="feedback-msg" class="text-xs text-envio-600 mt-3 text-center hidden max-w-md mx-auto" aria-live="polite"></p>
+                </div>
+
                 <div id="waitlist-block" class="bg-white border border-envio-200 rounded-lg p-6 mb-8 no-print">
                     <p class="text-sm text-envio-900 font-semibold mb-1 text-center">Optional follow-up</p>
                     <p class="text-xs text-envio-600 mb-4 text-center">Leave your email if you'd like occasional updates from Envio Health.</p>
@@ -442,7 +494,7 @@
             },
             {
                 id: "careBarrier",
-                title: "When you've looked for help, what has felt hardest or most frustrating?",
+                title: "When you've tried to get help, what has felt hardest or most frustrating?",
                 options: [
                     { text: "Knowing where to start", value: "where_to_start" },
                     { text: "Getting providers to look at the whole picture", value: "whole_picture" },
@@ -450,16 +502,17 @@
                     { text: "Cost or insurance", value: "cost_access" },
                     { text: "Finding someone I trust", value: "trust" },
                     { text: "Feeling dismissed or not taken seriously", value: "dismissed" },
-                    { text: "I haven't looked for help yet", value: "not_looked" }
+                    { text: "I haven't tried to get help yet", value: "not_looked" }
                 ]
             },
             {
                 id: "integratedCareInterest",
-                title: "Would you use one platform (or place) that connects skin health, hormone support, emotional wellbeing, for breakouts, eczema, redness, sensitivity, hair loss, picking, hair pulling, and more?",
+                title: "Would you use one simple app that brings skin, hormone, and emotional support together?",
                 options: [
-                    { text: "Yes, I'd use this", value: "yes" },
-                    { text: "Maybe", value: "maybe" },
-                    { text: "Not for me", value: "not_for_me" }
+                    { text: "Yes, definitely", value: "yes_definitely" },
+                    { text: "Yes, probably", value: "yes_probably" },
+                    { text: "Not sure", value: "not_sure" },
+                    { text: "No", value: "no" }
                 ]
             }
         ];
@@ -976,10 +1029,97 @@
             document.getElementById('who-can-help-text').innerText = getWhoCanHelpText(age, skin, duration, userResponses);
 
             logQuizCompletion(profile.title);
+            setupPostResultsFeedback();
 
             requestAnimationFrame(() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+        }
+
+        function setupPostResultsFeedback() {
+            const interest = userResponses.integratedCareInterest;
+            const showPriorities = interest === 'yes_definitely' || interest === 'yes_probably' || interest === 'not_sure';
+            const section = document.getElementById('feature-priorities-section');
+            if (section) {
+                section.classList.toggle('hidden', !showPriorities);
+            }
+            userResponses.appFeaturePriorities = [];
+        }
+
+        function getSelectedFeaturePriorities() {
+            return Array.from(document.querySelectorAll('#feature-priorities-list input[type="checkbox"]:checked'))
+                .map(box => box.value);
+        }
+
+        function toggleFeaturePriority() {
+            userResponses.appFeaturePriorities = getSelectedFeaturePriorities();
+            document.getElementById('feedback-msg')?.classList.add('hidden');
+        }
+
+        function submitPostResultsFeedback() {
+            const text = document.getElementById('open-feedback').value.trim();
+            const priorities = getSelectedFeaturePriorities();
+            const msg = document.getElementById('feedback-msg');
+            const btn = document.getElementById('feedback-submit');
+            const showPriorities = !document.getElementById('feature-priorities-section')?.classList.contains('hidden');
+
+            if (priorities.length === 0 && !text) {
+                msg.textContent = showPriorities
+                    ? 'Select at least one option, add a note, or tap Skip.'
+                    : 'Add a brief note, or tap Skip.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                msg.classList.remove('hidden');
+                return;
+            }
+            if (!FORMSPREE_ENDPOINT) {
+                msg.textContent = 'Form not connected yet — add your Formspree URL in index.html, then push to GitHub.';
+                msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                msg.classList.remove('hidden');
+                return;
+            }
+
+            const profileTitle = document.getElementById('profile-title')?.innerText || '';
+            if (priorities.length) userResponses.appFeaturePriorities = priorities;
+            if (text) userResponses.openFeedback = text;
+
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+            msg.classList.add('hidden');
+
+            const payload = {
+                _subject: 'The Envio Skin Profile — optional feedback',
+                submission_type: 'optional_feedback',
+                profile: profileTitle,
+                quiz_responses: JSON.stringify(userResponses)
+            };
+            if (priorities.length) payload.app_feature_priorities = JSON.stringify(priorities);
+            if (text) payload.open_response = text;
+
+            submitToFormspree(payload)
+                .then(() => {
+                    msg.textContent = 'Response recorded. Thank you.';
+                    msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                    msg.classList.remove('hidden');
+                    document.getElementById('open-feedback').disabled = true;
+                    document.querySelectorAll('#feature-priorities-list input[type="checkbox"]').forEach(box => {
+                        box.disabled = true;
+                    });
+                    btn.classList.add('hidden');
+                    document.getElementById('feedback-skip')?.classList.add('hidden');
+                })
+                .catch(() => {
+                    msg.textContent = 'Something went wrong — try again or skip this step.';
+                    msg.className = 'text-xs text-envio-600 mt-3 text-center max-w-md mx-auto';
+                    msg.classList.remove('hidden');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.textContent = 'Share response';
+                });
+        }
+
+        function skipPostResultsFeedback() {
+            document.getElementById('post-results-feedback').classList.add('hidden');
         }
 
         function submitWaitlist(event) {
@@ -1024,6 +1164,9 @@
                 quiz_responses: JSON.stringify(userResponses)
             };
             if (userResponses.openFeedback) payload.open_response = userResponses.openFeedback;
+            if (userResponses.appFeaturePriorities?.length) {
+                payload.app_feature_priorities = JSON.stringify(userResponses.appFeaturePriorities);
+            }
 
             submitToFormspree(payload)
                 .then(() => {
@@ -1046,6 +1189,17 @@
         function resetAssessment() {
             currentStep = 0;
             userResponses = {};
+            document.getElementById('open-feedback').value = '';
+            document.getElementById('open-feedback').disabled = false;
+            document.querySelectorAll('#feature-priorities-list input[type="checkbox"]').forEach(box => {
+                box.checked = false;
+                box.disabled = false;
+            });
+            document.getElementById('feedback-msg').classList.add('hidden');
+            document.getElementById('post-results-feedback').classList.remove('hidden');
+            document.getElementById('feedback-submit').classList.remove('hidden');
+            document.getElementById('feedback-skip')?.classList.remove('hidden');
+            document.getElementById('feature-priorities-section')?.classList.add('hidden');
             document.getElementById('waitlist-email').value = '';
             document.getElementById('waitlist-msg').classList.add('hidden');
             document.getElementById('quiz-recorded-msg').classList.add('hidden');

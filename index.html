@@ -520,10 +520,97 @@
         let currentStep = 0;
         let userResponses = {};
         let lastResultsSummary = '';
+        const trafficSource = captureTrafficSource();
+        userResponses.trafficSource = trafficSource;
 
         // 1. Sign up at formspree.io → New form → copy your form URL
         // 2. Paste it below (example: 'https://formspree.io/f/xyzabc')
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mgobgdoz';
+
+        function captureTrafficSource() {
+            const params = new URLSearchParams(window.location.search);
+            const utm_source = (params.get('utm_source') || '').trim();
+            const utm_medium = (params.get('utm_medium') || '').trim();
+            const utm_campaign = (params.get('utm_campaign') || '').trim();
+            const utm_content = (params.get('utm_content') || '').trim();
+            const ref = (params.get('ref') || params.get('source') || '').trim();
+            const referrer = (document.referrer || '').trim();
+            const sourceKey = (utm_source || ref).toLowerCase();
+            const mediumKey = utm_medium.toLowerCase();
+
+            let channel = 'Direct / unknown';
+            if (sourceKey.includes('shopify') || (mediumKey === 'email' && !sourceKey)) {
+                channel = 'Shopify email';
+            } else if (sourceKey.includes('instagram') || sourceKey === 'ig') {
+                channel = 'Instagram';
+            } else if (sourceKey.includes('facebook') || sourceKey === 'fb') {
+                channel = 'Facebook';
+            } else if (sourceKey.includes('pinterest')) {
+                channel = 'Pinterest';
+            } else if (sourceKey.includes('tiktok') || sourceKey === 'tt') {
+                channel = 'TikTok';
+            } else if (sourceKey.includes('youtube') || sourceKey === 'yt') {
+                channel = 'YouTube';
+            } else if (sourceKey) {
+                channel = sourceKey.charAt(0).toUpperCase() + sourceKey.slice(1);
+            } else if (referrer.includes('instagram.com')) {
+                channel = 'Instagram';
+            } else if (referrer.includes('facebook.com') || referrer.includes('fb.com')) {
+                channel = 'Facebook';
+            } else if (referrer.includes('pinterest.com')) {
+                channel = 'Pinterest';
+            } else if (referrer.includes('tiktok.com')) {
+                channel = 'TikTok';
+            } else if (referrer.includes('youtube.com') || referrer.includes('youtu.be')) {
+                channel = 'YouTube';
+            }
+
+            return {
+                channel,
+                utm_source,
+                utm_medium,
+                utm_campaign,
+                utm_content,
+                ref,
+                referrer,
+                landing_url: window.location.href.split('#')[0]
+            };
+        }
+
+        function withTrafficFields(payload) {
+            return {
+                ...payload,
+                traffic_channel: trafficSource.channel,
+                utm_source: trafficSource.utm_source,
+                utm_medium: trafficSource.utm_medium,
+                utm_campaign: trafficSource.utm_campaign,
+                utm_content: trafficSource.utm_content,
+                ref: trafficSource.ref,
+                referrer: trafficSource.referrer,
+                traffic: JSON.stringify(trafficSource)
+            };
+        }
+
+        function logQuizPageView() {
+            if (!FORMSPREE_ENDPOINT) return;
+            if (sessionStorage.getItem('envio_quiz_page_logged') === '1') return;
+            sessionStorage.setItem('envio_quiz_page_logged', '1');
+            submitToFormspree(withTrafficFields({
+                _subject: 'The Envio Skin Profile — page visit',
+                submission_type: 'page_visit'
+            })).catch(() => {});
+        }
+
+        function logQuizStarted() {
+            if (!FORMSPREE_ENDPOINT) return;
+            if (sessionStorage.getItem('envio_quiz_started_logged') === '1') return;
+            sessionStorage.setItem('envio_quiz_started_logged', '1');
+            submitToFormspree(withTrafficFields({
+                _subject: 'The Envio Skin Profile — quiz started',
+                submission_type: 'quiz_started',
+                first_question: assessmentQuestions[0]?.id || 'skinConcern'
+            })).catch(() => {});
+        }
 
         // Formspree AJAX: Accept + Content-Type application/json; response.ok = success.
         // Do not send a fake email — Formspree rejects invalid email values.
@@ -566,12 +653,12 @@
         // No email required — profile + quiz_responses are sent to Formspree.
         function logQuizCompletion(profileTitle) {
             if (!FORMSPREE_ENDPOINT) return;
-            submitToFormspree({
+            submitToFormspree(withTrafficFields({
                 _subject: 'The Envio Skin Profile — quiz completed',
                 submission_type: 'quiz_completion',
                 profile: profileTitle,
                 quiz_responses: JSON.stringify(userResponses)
-            })
+            }))
                 .then(() => showQuizRecordedStatus(true))
                 .catch(() => showQuizRecordedStatus(false));
         }
@@ -933,6 +1020,7 @@
 
         function handleSelection(questionId, selectedValue) {
             userResponses[questionId] = selectedValue;
+            if (currentStep === 0) logQuizStarted();
 
             goToNextStep();
         }
@@ -1086,12 +1174,12 @@
             btn.textContent = 'Sending…';
             msg.classList.add('hidden');
 
-            const payload = {
+            const payload = withTrafficFields({
                 _subject: 'The Envio Skin Profile — optional feedback',
                 submission_type: 'optional_feedback',
                 profile: profileTitle,
                 quiz_responses: JSON.stringify(userResponses)
-            };
+            });
             if (priorities.length) payload.app_feature_priorities = JSON.stringify(priorities);
             if (text) payload.open_response = text;
 
@@ -1156,13 +1244,13 @@
             btn.textContent = 'Sending…';
             msg.classList.add('hidden');
 
-            const payload = {
+            const payload = withTrafficFields({
                 _subject: 'The Envio Skin Profile — email opt-in',
                 submission_type: 'email_opt_in',
                 email: email,
                 profile: profileTitle,
                 quiz_responses: JSON.stringify(userResponses)
-            };
+            });
             if (userResponses.openFeedback) payload.open_response = userResponses.openFeedback;
             if (userResponses.appFeaturePriorities?.length) {
                 payload.app_feature_priorities = JSON.stringify(userResponses.appFeaturePriorities);
@@ -1188,7 +1276,7 @@
 
         function resetAssessment() {
             currentStep = 0;
-            userResponses = {};
+            userResponses = { trafficSource };
             document.getElementById('open-feedback').value = '';
             document.getElementById('open-feedback').disabled = false;
             document.querySelectorAll('#feature-priorities-list input[type="checkbox"]').forEach(box => {
@@ -1210,6 +1298,7 @@
             displayQuestion();
         }
 
+        logQuizPageView();
         displayQuestion();
     </script>
 </body>

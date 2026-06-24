@@ -204,13 +204,10 @@
                 <div id="quiz-intro" class="text-center mb-8">
                     <h1 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight mb-4">The Envio Skin Profile</h1>
                     <p class="text-envio-700 text-sm leading-relaxed max-w-lg mx-auto mb-3">
-                        A 2-minute assessment to help girls, teens, and women understand how stress, hormones, emotions, and life stages may affect their skin. Ten brief questions give you a personalized profile and a practical next step.
-                    </p>
-                    <p class="text-envio-600 text-sm leading-relaxed max-w-lg mx-auto mb-3">
-                        Your responses are anonymous. You do not need to share your name to begin.
+                        Ten quick questions (~2 min) for girls, teens, and women — how stress, hormones, emotions, and life stages may show up on your skin, plus a personalized next step.
                     </p>
                     <p class="text-envio-600 text-sm leading-relaxed max-w-lg mx-auto">
-                        When you finish, you'll receive a complimentary code for an Envio Skincare item.
+                        Anonymous · no name or account needed · complimentary gift when you finish.
                     </p>
                     <p class="text-envio-500 text-xs mt-4 tracking-wide">— Jan 🤍</p>
                 </div>
@@ -238,10 +235,13 @@
                         Your Profile
                     </div>
                     <h2 class="text-2xl md:text-3xl font-bold text-envio-800 tracking-tight">Your Mind-Skin Connection</h2>
-                    <p class="text-envio-600 mt-3 text-sm max-w-md mx-auto leading-relaxed">
-                        Based on your answers, here's your personalized profile and a next step you can try this week.
+                    <p class="text-envio-800 text-sm max-w-md mx-auto leading-relaxed mt-3 font-medium">
+                        You're all set. Your profile is ready below — your anonymous responses were saved.
                     </p>
-                    <p id="quiz-recorded-msg" class="text-xs text-envio-500 mt-2 hidden" aria-live="polite"></p>
+                    <p class="text-envio-600 text-xs max-w-md mx-auto leading-relaxed mt-2">
+                        If you have a moment, the optional section below helps us understand what kind of support would help you most.
+                    </p>
+                    <p id="quiz-recorded-msg" class="text-xs text-envio-600 mt-2 hidden" aria-live="polite"></p>
                 </div>
 
                 <div class="bg-ivory-100 border border-envio-100 rounded-xl p-6 mb-4 shadow-sm">
@@ -612,16 +612,20 @@
             })).catch(() => {});
         }
 
-        // Formspree AJAX: Accept + Content-Type application/json; response.ok = success.
-        // Do not send a fake email — Formspree rejects invalid email values.
+        // Formspree: use form-urlencoded (not JSON) so logging works even when reCAPTCHA is on.
         async function submitToFormspree(payload) {
+            const body = new URLSearchParams();
+            Object.entries(payload).forEach(([key, value]) => {
+                if (value === undefined || value === null || value === '') return;
+                body.append(key, String(value));
+            });
             const response = await fetch(FORMSPREE_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(payload)
+                body: body.toString()
             });
             let data = {};
             try {
@@ -638,15 +642,10 @@
 
         function showQuizRecordedStatus(success) {
             const el = document.getElementById('quiz-recorded-msg');
-            if (!el) return;
+            if (!el || success) return;
+            el.textContent = 'We could not save your responses in the background — your profile below is still complete.';
+            el.className = 'text-xs text-envio-600 mt-2';
             el.classList.remove('hidden');
-            if (success) {
-                el.textContent = 'Responses recorded.';
-                el.className = 'text-xs text-envio-500 mt-2';
-            } else {
-                el.textContent = 'Could not save responses — your results above are still complete.';
-                el.className = 'text-xs text-envio-600 mt-2';
-            }
         }
 
         // Auto-log fires only here: after the user answers the final question and generateClinicalResults() runs.
